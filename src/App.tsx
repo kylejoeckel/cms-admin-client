@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login'; // Adjust the import path as necessary
-import ContentForm from './components/ContentForm'; // Adjust the import path as necessary
+import ContentForm from './pages/ContentForm'; // Adjust the import path as necessary
 import { AuthProvider } from './hooks/useAuth'; // Adjust the import path as necessary
 // import ProtectedRoute from './components/ProtectedRoute'; // Assuming you also move ProtectedRoute
 import theme from './theme';
