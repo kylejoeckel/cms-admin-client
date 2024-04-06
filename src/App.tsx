@@ -15,7 +15,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<PageTemplate><Login /></PageTemplate>} />
-            <Route path="/main" element={
+            <Route path="/" element={
               // <ProtectedRoute>
               <PageTemplate>
                 <ContentForm />

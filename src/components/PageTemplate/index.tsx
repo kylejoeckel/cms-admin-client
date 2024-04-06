@@ -14,7 +14,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ children }) => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         MenuMatrix CMS
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {/* <Button color="inherit">Login</Button> */}
                 </Toolbar>
             </AppBar>
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ContentCard from "../../components/ContentCard";
 import { Button, Card, Grid, Typography } from "@mui/material";
 import FileUploader from "../../components/FileUploader";
+import BasicInfoForm from "../../components/BasicInfoForm";
 
 export interface CTA {
   cta: string;
@@ -22,8 +23,8 @@ export interface FormData {
   hours: string;
   address: string;
   phone: string;
-  lat: number;
-  long: number;
+  latitude: number;
+  longitude: number;
   domainName: string;
   contactEmail: string;
   reservationLink: string;
@@ -34,6 +35,7 @@ export interface FormData {
   heroImg: string;
   heroVideo: string;
   heroVideoPoster: string;
+  menuRoute: string;
   content: ContentItem[];
 }
 
@@ -43,8 +45,8 @@ const RestaurantForm = () => {
     hours: "",
     address: "",
     phone: "",
-    lat: 0,
-    long: 0,
+    latitude: 0,
+    longitude: 0,
     domainName: "",
     contactEmail: "",
     reservationLink: "",
@@ -55,6 +57,7 @@ const RestaurantForm = () => {
     heroImg: "",
     heroVideo: "",
     heroVideoPoster: "",
+    menuRoute: "",
     content: [
       {
         title: "",
@@ -139,6 +142,10 @@ const RestaurantForm = () => {
     }));
   };
 
+  const setMenuRoute = (file: string, index: number) => {
+    setFormData({ ...formData, menuRoute: file });
+  };
+
   return (
     <>
       <Card
@@ -154,6 +161,7 @@ const RestaurantForm = () => {
           <FileUploader />
         </Card>
       </Card>
+      <BasicInfoForm formData={formData} setFormData={setFormData} setMenuRoute={setMenuRoute} />
       <Card
         sx={{
           border: "solid 1px lightgrey",
@@ -163,14 +171,7 @@ const RestaurantForm = () => {
         }}
       >
         <Typography variant="h5">Content Section Editor</Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={saveFormData}
-          sx={{ margin: "1rem 0" }}
-        >
-          Save Changes
-        </Button>
+
         <Grid container spacing={2}>
           {formData.content.map((content, index) => (
             <Grid item xs={12} sm={6} key={index}>
@@ -183,6 +184,14 @@ const RestaurantForm = () => {
           ))}
         </Grid>
       </Card>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={saveFormData}
+        sx={{ margin: "1rem 0" }}
+      >
+        Save Changes
+      </Button>
     </>
   );
 };
