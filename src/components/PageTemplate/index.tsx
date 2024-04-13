@@ -1,6 +1,6 @@
 // PageTemplate.tsx
 import React, { ReactNode } from 'react';
-import { Container, Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { Container, Box, AppBar, Toolbar, Typography } from '@mui/material';
 
 interface PageTemplateProps {
     children: ReactNode;
@@ -18,7 +18,6 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ children }) => {
                 </Toolbar>
             </AppBar>
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                {/* This is where the child components specific to each route will be rendered */}
                 {children}
             </Container>
         </Box>

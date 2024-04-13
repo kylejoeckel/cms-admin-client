@@ -9,11 +9,9 @@ const Login: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Call the login function from your useAuth hook. 
-    // This is just a placeholder; you might need to adjust it to your auth function's requirements
     login(
-      // username, password
-      );
+      username, password
+    );
   };
 
   return (

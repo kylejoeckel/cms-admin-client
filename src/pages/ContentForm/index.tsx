@@ -3,6 +3,7 @@ import ContentCard from "../../components/ContentCard";
 import { Button, Card, Grid, Typography } from "@mui/material";
 import FileUploader from "../../components/FileUploader";
 import BasicInfoForm from "../../components/BasicInfoForm";
+import { jwtDecode } from 'jwt-decode';
 
 export interface CTA {
   cta: string;
@@ -40,6 +41,9 @@ export interface FormData {
 }
 
 const RestaurantForm = () => {
+  const token = localStorage.getItem("auth-token");
+  const decoded = jwtDecode(token || '');
+  const organizationId = (decoded as { organization_id?: string }).organization_id || '';
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     hours: "",
@@ -74,7 +78,7 @@ const RestaurantForm = () => {
       const response = await (
         await fetch(
           process.env.REACT_APP_SITE_DATA_URL +
-          `/${process.env.REACT_APP_SITE_DATA_ID}`,
+          `/${organizationId}`,
           {
             method: "GET",
             headers: {
@@ -93,7 +97,7 @@ const RestaurantForm = () => {
   const saveFormData = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SITE_DATA_URL}/${process.env.REACT_APP_SITE_DATA_ID}`,
+        `${process.env.REACT_APP_SITE_DATA_URL}/${organizationId}`,
         {
           method: "PUT",
           headers: {
