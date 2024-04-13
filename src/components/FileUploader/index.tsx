@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, } from '@mui/material';
+import { IconButton, } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
 
 
 const FileUploader: React.FC = () => {
@@ -58,13 +59,12 @@ const FileUploader: React.FC = () => {
         <div>
             <form
                 onSubmit={handleSubmit}
+                style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
             >
                 <input type="file" accept="application/pdf, image/png, image/jpeg" onChange={handleFileChange} />
-
-                <Button type="submit" variant="contained">Upload</Button>
+                <IconButton color='primary' type="submit"><CloudUpload /></IconButton>
             </form>
-
-        </div>
+        </div >
     );
 };
 

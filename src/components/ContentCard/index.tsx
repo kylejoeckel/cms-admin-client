@@ -1,84 +1,105 @@
-import React, { useCallback } from 'react';
-import {
-    Card,
-    TextField,
-} from '@mui/material';
-import ImageSelector from '../ImageSelector';
-import CTAList from '../CTAList';
+import React, { useCallback } from "react";
+import { IconButton, TextField, Typography } from "@mui/material";
+import ImageSelector from "../ImageSelector";
+import CTAList from "../CTAList";
+import { ContentCardProps } from "../../template/a/interfaces";
+import useSiteDataStore from "../../store/useSiteDataStore";
+import { StyledCard } from "../StyledCard";
+import { Add, Remove } from "@mui/icons-material";
 
-interface CTAItem {
-    cta: string;
-    ctaLink: string;
-    ctaDownload: boolean;
-}
+const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
+  const { updateContentItem: updateData } = useSiteDataStore();
+  const handleTitleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      updateData(index, "title", event.target.value);
+    },
+    [index, updateData]
+  );
 
-interface ContentItem {
-    title: string;
-    content: string;
-    contentImg: string;
-    ctaList: CTAItem[];
-}
+  const handleContentChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      updateData(index, "content", event.target.value);
+    },
+    [index, updateData]
+  );
 
-interface ContentCardProps {
-    index: number;
-    contentData: ContentItem;
-    updateData: (
-        index: number,
-        parameterName: string,
-        value: string | boolean,
-        ctaIndex?: number
-    ) => void;
-}
+  const handleImageChange = useCallback(
+    (image: string) => {
+      updateData(index, "contentImg", image);
+    },
+    [index, updateData]
+  );
 
+  const handleLinkChange = useCallback(
+    (link: string, idx: number) => {
+      updateData(index, "ctaLink", link, idx);
+    },
+    [index, updateData]
+  );
 
-const ContentCard: React.FC<ContentCardProps> = ({ contentData, updateData, index }) => {
-    const handleTitleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        updateData(index, "title", event.target.value);
-    }, [index, updateData]);
-
-    const handleContentChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        updateData(index, "content", event.target.value);
-    }, [index, updateData]);
-
-    const handleImageChange = useCallback((image: string) => {
-        updateData(index, "contentImg", image);
-    }, [index, updateData]);
-
-    const handleLinkChange = useCallback((link: string, idx: number) => {
-        updateData(index, "ctaLink", link, idx);
-    }, [index, updateData]);
-
-    return (
-        <Card sx={{ border: '1px solid #ccc', padding: '1rem', margin: '1rem 0' }}>
-            <TextField
-                label="Title"
-                value={contentData.title}
-                onChange={handleTitleChange}
-                fullWidth
-                margin="normal"
-            />
-            <TextField
-                label="Content"
-                value={contentData.content}
-                onChange={handleContentChange}
-                fullWidth
-                multiline
-                rows={4}
-                margin="normal"
-            />
-            <ImageSelector
-                label="Background Image"
-                setImage={handleImageChange}
-                currentImage={contentData.contentImg}
-            />
-            <CTAList
-                ctaList={contentData.ctaList}
-                handleLinkChange={handleLinkChange}
-                updateData={updateData}
-                index={index}
-            />
-        </Card>
-    );
+  return (
+    <StyledCard>
+      <TextField
+        label="Title"
+        value={contentData.title}
+        onChange={handleTitleChange}
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Content"
+        value={contentData.content}
+        onChange={handleContentChange}
+        fullWidth
+        multiline
+        rows={4}
+        margin="normal"
+      />
+      <ImageSelector
+        label="Background Image"
+        setImage={handleImageChange}
+        currentImage={contentData.contentImg}
+      />
+      <hr />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="subtitle2" style={{ marginTop: "10px" }}>
+          CTA Button
+        </Typography>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <IconButton
+            size="small"
+            onClick={() =>
+              updateData(index, "ctaList", contentData.ctaList.slice(0, -1))
+            }
+          >
+            <Remove />
+          </IconButton>
+          <IconButton
+            size="small"
+            onClick={() =>
+              updateData(index, "ctaList", [
+                ...contentData.ctaList,
+                { cta: "", ctaLink: "", ctaDownload: false },
+              ])
+            }
+          >
+            <Add />
+          </IconButton>
+        </div>
+      </div>
+      <CTAList
+        ctaList={contentData.ctaList}
+        handleLinkChange={handleLinkChange}
+        index={index}
+      />
+    </StyledCard>
+  );
 };
 
 export default ContentCard;

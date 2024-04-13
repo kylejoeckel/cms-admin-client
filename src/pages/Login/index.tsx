@@ -32,19 +32,19 @@ const Login: React.FC = () => {
             required
             fullWidth
             id="username"
-            label="Username"
+            label="Username or Email Address"
             name="username"
             autoComplete="username"
             autoFocus
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}
           />
           <TextField
             margin="normal"
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Password (case-sensitive)"
             type="password"
             id="password"
             autoComplete="current-password"
