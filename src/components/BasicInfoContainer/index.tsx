@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, TextField, Typography } from "@mui/material";
-import PdfSelector from "../../components/PdfSelector";
+import PdfSelector from "../PdfSelector";
 import { FormData } from "../../template/a/interfaces";
 import useSiteDataStore from "../../store/useSiteDataStore";
 import StyledContainer, { StyledCard } from "../StyledCard";
@@ -27,7 +27,7 @@ const BasicInfoForm: React.FC = () => {
         <Grid container>
           <TextField
             label="Full Name"
-            value={formData.fullName}
+            value={formData?.fullName}
             onChange={handleChange("fullName")}
             fullWidth
             margin="normal"
@@ -35,7 +35,7 @@ const BasicInfoForm: React.FC = () => {
 
           <TextField
             label="Address"
-            value={formData.address}
+            value={formData?.address}
             onChange={handleChange("address")}
             fullWidth
             margin="normal"
@@ -43,7 +43,7 @@ const BasicInfoForm: React.FC = () => {
 
           <TextField
             label="Phone Number"
-            value={formData.phone}
+            value={formData?.phone}
             onChange={handleChange("phone")}
             fullWidth
             margin="normal"
@@ -52,12 +52,12 @@ const BasicInfoForm: React.FC = () => {
           <PdfSelector
             index={-1}
             setFile={handleFileSelect}
-            selectedFile={formData.menuRoute}
+            selectedFile={formData?.menuRoute || ""}
           />
 
           <TextField
             label="Hours"
-            value={formData.hours}
+            value={formData?.hours}
             onChange={handleChange("hours")}
             fullWidth
             disabled
@@ -66,7 +66,7 @@ const BasicInfoForm: React.FC = () => {
 
           <TextField
             label="Domain Name"
-            value={formData.domainName}
+            value={formData?.domainName}
             onChange={handleChange("domainName")}
             fullWidth
             disabled

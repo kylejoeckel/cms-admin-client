@@ -1,27 +1,21 @@
-import ContentCard from "../../components/ContentCard";
-import { Button, Card, Grid, LinearProgress, Typography } from "@mui/material";
-import FileUploader from "../../components/FileUploader";
-import BasicInfoForm from "../../components/BasicInfoForm";
+import BasicInfoForm from "../../components/BasicInfoContainer";
 import { jwtDecode } from "jwt-decode";
-import { ContentItem } from "../../template/a/interfaces";
 import { useMobile } from "../../hooks/useMobile";
 import { useSiteData } from "../../hooks/useSiteData";
 import DashboardHeader from "../../components/DashboardHeader";
-import { Add, Remove } from "@mui/icons-material";
-import useSiteDataStore from "../../store/useSiteDataStore";
 import SnackBar from "../../components/Snackbar";
 import UploadContainer from "../../components/UploadContainer";
 import ContentContainer from "../../components/ContentContainer";
+import { LinearProgress } from "@mui/material";
+import HeaderContainer from "../../components/HeaderContainer";
 
 const Dashboard = () => {
   const token = localStorage.getItem("auth-token");
   const decoded = jwtDecode(token || "");
   const organizationId =
     (decoded as { organization_id?: string }).organization_id || "";
-  const { setFormData } = useSiteDataStore();
   const {
     handleSave,
-    formData,
     isError,
     isLoading,
     saving,
@@ -63,6 +57,7 @@ const Dashboard = () => {
         <div>
           <UploadContainer />
           <BasicInfoForm />
+          <HeaderContainer />
         </div>
         <div>
           <ContentContainer />

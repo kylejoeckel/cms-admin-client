@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { IconButton, TextField, Typography } from "@mui/material";
 import ImageSelector from "../ImageSelector";
 import CTAList from "../CTAList";
-import { ContentCardProps } from "../../template/a/interfaces";
+import { ContentCardProps, CTA } from "../../template/a/interfaces";
 import useSiteDataStore from "../../store/useSiteDataStore";
 import { StyledCard } from "../StyledCard";
 import { Add, Remove } from "@mui/icons-material";
@@ -30,25 +30,20 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
     [index, updateData]
   );
 
-  const handleLinkChange = useCallback(
-    (link: string, idx: number) => {
-      updateData(index, "ctaLink", link, idx);
-    },
-    [index, updateData]
-  );
+
 
   return (
     <StyledCard>
       <TextField
         label="Title"
-        value={contentData.title}
+        value={contentData?.title}
         onChange={handleTitleChange}
         fullWidth
         margin="normal"
       />
       <TextField
         label="Content"
-        value={contentData.content}
+        value={contentData?.content}
         onChange={handleContentChange}
         fullWidth
         multiline
@@ -58,7 +53,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
       <ImageSelector
         label="Background Image"
         setImage={handleImageChange}
-        currentImage={contentData.contentImg}
+        currentImage={contentData?.contentImg || ""}
       />
       <hr />
       <div
@@ -75,7 +70,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
           <IconButton
             size="small"
             onClick={() =>
-              updateData(index, "ctaList", contentData.ctaList.slice(0, -1))
+              updateData(index, "ctaList", contentData?.ctaList?.slice(0, -1))
             }
           >
             <Remove />
@@ -84,7 +79,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
             size="small"
             onClick={() =>
               updateData(index, "ctaList", [
-                ...contentData.ctaList,
+                ...(contentData?.ctaList as CTA[]),
                 { cta: "", ctaLink: "", ctaDownload: false },
               ])
             }
@@ -93,11 +88,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
           </IconButton>
         </div>
       </div>
-      <CTAList
-        ctaList={contentData.ctaList}
-        handleLinkChange={handleLinkChange}
-        index={index}
-      />
+      <CTAList ctaList={contentData?.ctaList || []} index={index} />
     </StyledCard>
   );
 };

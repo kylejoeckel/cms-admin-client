@@ -4,9 +4,18 @@ import useSiteDataStore from "../../store/useSiteDataStore";
 import { ContentItem } from "../../template/a/interfaces";
 import ContentCard from "../ContentCard";
 import StyledContainer from "../StyledCard";
+import { useEffect, useState } from "react";
 
 const ContentContainer: React.FC = () => {
   const { formData, setFormData } = useSiteDataStore();
+  const [content, setContent] = useState<ContentItem[]>(
+    formData?.content || []
+  );
+  useEffect(() => {
+    if (formData?.content) {
+      setContent(formData.content);
+    }
+  }, [formData.content]);
   return (
     <StyledContainer>
       <div
@@ -27,7 +36,7 @@ const ContentContainer: React.FC = () => {
             onClick={() => {
               setFormData({
                 ...formData,
-                content: formData.content.slice(0, -1),
+                content: content?.slice(0, -1),
               });
             }}
           >
@@ -40,7 +49,7 @@ const ContentContainer: React.FC = () => {
               setFormData({
                 ...formData,
                 content: [
-                  ...formData.content,
+                  content,
                   {
                     title: "",
                     content: "",
@@ -56,7 +65,7 @@ const ContentContainer: React.FC = () => {
         </div>
       </div>
       <Grid container spacing={2}>
-        {formData.content.map((content: ContentItem, index: number) => (
+        {content?.map((content: ContentItem, index: number) => (
           <Grid item xs={12} sm={6} key={index}>
             <ContentCard contentData={content} index={index} />
           </Grid>
