@@ -39,8 +39,15 @@ export const useSiteData = (organizationId: string) => {
     ["siteData", organizationId],
     () => fetchSiteData(organizationId)
   );
-  const { setOriginalData, originalData, setFormData, formData, resetData } =
-    useSiteDataStore();
+  const {
+    setOriginalData,
+    originalData,
+    setFormData,
+    formData,
+    resetData,
+    setContentData,
+    setHeaderData,
+  } = useSiteDataStore();
   const [hasChanged, setHasChanged] = useState<boolean>(
     !isEqual(formData, originalData)
   );
@@ -55,8 +62,10 @@ export const useSiteData = (organizationId: string) => {
     if (data && data.siteData) {
       setFormData(data.siteData);
       setOriginalData(data.siteData);
+      setContentData(data.siteData.content);
+      setHeaderData(data.siteData.header);
     }
-  }, [data, setFormData, setOriginalData]);
+  }, [data, setContentData, setFormData, setHeaderData, setOriginalData]);
 
   const mutation = useMutation(() => updateFormData(organizationId, formData), {
     onSuccess: (result) => {

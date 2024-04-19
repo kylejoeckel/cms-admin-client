@@ -20,7 +20,7 @@ const DashboardHeader: React.FC<{
         padding: "8px 0 8px 0",
       }}
     >
-      <Typography variant="h5">Editor</Typography>
+      <Typography variant="h5">Dashboard</Typography>
       <div
         style={{
           display: "flex",

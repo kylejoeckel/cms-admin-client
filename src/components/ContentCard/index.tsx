@@ -30,8 +30,6 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
     [index, updateData]
   );
 
-
-
   return (
     <StyledCard>
       <TextField
@@ -88,7 +86,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentData, index }) => {
           </IconButton>
         </div>
       </div>
-      <CTAList ctaList={contentData?.ctaList || []} index={index} />
+      <CTAList index={index} />
     </StyledCard>
   );
 };

@@ -16,6 +16,10 @@ export const TEMPLATE_DATA = {
   heroVideo: "",
   heroVideoPoster: "",
   menuRoute: "",
+  header: {
+    ctaList: [{ cta: "", ctaLink: "", ctaDownload: false }],
+    logoUrl: "",
+  },
   content: [
     {
       title: "",
