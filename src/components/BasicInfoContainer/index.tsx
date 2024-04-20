@@ -1,28 +1,20 @@
 import React from "react";
-import { Grid, TextField, Typography } from "@mui/material";
-import PdfSelector from "../PdfSelector";
+import { Grid, TextField } from "@mui/material";
 import { FormData } from "../../template/a/interfaces";
 import useSiteDataStore from "../../store/useSiteDataStore";
-import StyledContainer, { StyledCard } from "../StyledCard";
+import { StyledCard } from "../StyledCard";
+import ContainerTemplate from "../ContainerTemplate";
 
-const BasicInfoForm: React.FC = () => {
-  const { setFormData, setMenuRoute, formData } = useSiteDataStore();
+const BasicInfoContainer: React.FC = () => {
+  const { setFormData, formData } = useSiteDataStore();
   // Event handler for text field changes
   const handleChange =
     (field: keyof FormData) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setFormData({ ...formData, [field]: event.target.value });
     };
 
-  // Event handler for PDF file selection
-  const handleFileSelect = (file: string, index: number) => {
-    setMenuRoute(file, index);
-  };
-
   return (
-    <StyledContainer>
-      <Typography variant="h6" style={{ marginBottom: "16px" }}>
-        Basic Info
-      </Typography>
+    <ContainerTemplate title="Basic Info">
       <StyledCard>
         <Grid container>
           <TextField
@@ -49,12 +41,6 @@ const BasicInfoForm: React.FC = () => {
             margin="normal"
           />
 
-          <PdfSelector
-            index={-1}
-            setFile={handleFileSelect}
-            selectedFile={formData?.menuRoute || ""}
-          />
-
           <TextField
             label="Hours"
             value={formData?.hours}
@@ -74,8 +60,8 @@ const BasicInfoForm: React.FC = () => {
           />
         </Grid>
       </StyledCard>
-    </StyledContainer>
+    </ContainerTemplate>
   );
 };
 
-export default BasicInfoForm;
+export default BasicInfoContainer;

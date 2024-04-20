@@ -12,6 +12,8 @@ import { CTA } from "../../template/a/interfaces";
 import useSiteDataStore from "../../store/useSiteDataStore";
 import CTAMenuOpts from "../CTAMenuOpts";
 
+
+// TODO: finish refactoring so that it can be used inside headercontainer and contentcard
 const CTAList: React.FC<{
   index: number | string;
 }> = ({ index }) => {

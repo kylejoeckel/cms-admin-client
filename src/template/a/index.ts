@@ -16,6 +16,14 @@ export const TEMPLATE_DATA = {
   heroVideo: "",
   heroVideoPoster: "",
   menuRoute: "",
+  metaData: {
+    appleMobileWebAppTitle: "",
+    description: "",
+    keywords: "",
+    ogDescription: "",
+    ogTitle: "",
+    ogUrl: "",
+  },
   header: {
     ctaList: [{ cta: "", ctaLink: "", ctaDownload: false }],
     logoUrl: "",

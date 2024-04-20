@@ -1,4 +1,4 @@
-import BasicInfoForm from "../../components/BasicInfoContainer";
+import BasicInfoContainer from "../../components/BasicInfoContainer";
 import { jwtDecode } from "jwt-decode";
 import { useMobile } from "../../hooks/useMobile";
 import { useSiteData } from "../../hooks/useSiteData";
@@ -8,6 +8,7 @@ import UploadContainer from "../../components/UploadContainer";
 import ContentContainer from "../../components/ContentContainer";
 import { LinearProgress } from "@mui/material";
 import HeaderContainer from "../../components/HeaderContainer";
+import MetadataContainer from "../../components/MetadataContainer";
 
 const Dashboard = () => {
   const token = localStorage.getItem("auth-token");
@@ -56,10 +57,11 @@ const Dashboard = () => {
       >
         <div>
           <UploadContainer />
-          <BasicInfoForm />
+          <BasicInfoContainer />
           <HeaderContainer />
         </div>
         <div>
+          <MetadataContainer />
           <ContentContainer />
         </div>
       </div>

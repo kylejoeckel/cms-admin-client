@@ -7,14 +7,14 @@ import {
   Grid,
   Switch,
   TextField,
-  Typography,
 } from "@mui/material";
 import { HeaderData } from "../../template/a/interfaces";
 import useSiteDataStore from "../../store/useSiteDataStore";
-import StyledContainer, { StyledCard } from "../StyledCard";
+import { StyledCard } from "../StyledCard";
 import ImageSelector from "../ImageSelector";
 import PdfSelector from "../PdfSelector";
 import CTAMenuOpts from "../CTAMenuOpts";
+import ContainerTemplate from "../ContainerTemplate";
 
 // TODO: abstractions needed to clean things up here
 const HeaderContainer: React.FC = () => {
@@ -28,10 +28,7 @@ const HeaderContainer: React.FC = () => {
   };
 
   return (
-    <StyledContainer>
-      <Typography variant="h6" style={{ marginBottom: "16px" }}>
-        Header Content
-      </Typography>
+    <ContainerTemplate title="Header Content">
       <StyledCard>
         <Grid container>
           {formData?.header?.logoUrl && (
@@ -137,7 +134,7 @@ const HeaderContainer: React.FC = () => {
           )}
         </Grid>
       </StyledCard>
-    </StyledContainer>
+    </ContainerTemplate>
   );
 };
 

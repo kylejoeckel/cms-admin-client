@@ -38,6 +38,22 @@ export interface HeaderData {
   logoUrl?: string;
 }
 
+export interface MetaData {
+  appleMobileWebAppTitle?: string;
+  appleMobileWebStatusBarStyle?: string;
+  appleTouchIcon?: string;
+  favicon?: string;
+  description?: string;
+  keywords?: string;
+  ogDescription?: string;
+  ogTitle?: string;
+  ogUrl?: string;
+  ogImage?: string;
+  ogSiteName?: string;
+  themeColor?: string;
+  title?: string;
+}
+
 export interface FormData {
   fullName?: string;
   hours?: string;
@@ -58,6 +74,7 @@ export interface FormData {
   menuRoute?: string;
   content?: ContentItem[];
   header?: HeaderData;
+  metaData?: MetaData;
 }
 
 export interface ContentCardProps {

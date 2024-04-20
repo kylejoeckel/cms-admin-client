@@ -1,14 +1,11 @@
-import { create } from "zustand";
+import create from "zustand";
 import { isEqual } from "lodash";
 import { TEMPLATE_DATA } from "../template/a/";
-import { FormData, ContentItem, CTA, MenuOpts } from "../template/a/interfaces";
-import produce from "immer";
+import { FormData, ContentItem, CTA } from "../template/a/interfaces";
 
 interface SiteDataStore {
   originalData: FormData;
   formData: FormData;
-  headerData: FormData["header"];
-  contentData: FormData["content"];
   hasChanged: boolean;
   setOriginalData: (data: FormData) => void;
   setFormData: (
@@ -21,55 +18,13 @@ interface SiteDataStore {
     value: any,
     ctaIndex?: number
   ) => void;
-  updateMenuOpts: (
-    ctaIndex: number,
-    menuIdx: number,
-    key: keyof MenuOpts,
-    value: any
-  ) => void;
   setMenuRoute: (file: string, index: number) => void;
-  setContentData: (data: FormData["content"]) => void;
-  setHeaderData: (data: FormData["header"]) => void;
 }
 
 const useSiteDataStore = create<SiteDataStore>((set, get) => ({
   originalData: TEMPLATE_DATA,
   formData: TEMPLATE_DATA,
   hasChanged: false,
-  headerData: TEMPLATE_DATA.header,
-  contentData: TEMPLATE_DATA.content,
-  setHeaderData: (data: FormData["header"]) => {
-    set((state) => ({
-      headerData: data
-        ? data
-        : state.formData.header
-        ? state.formData.header
-        : {},
-    }));
-  },
-  setContentData: (data: FormData["content"]) => {
-    set((state) => ({
-      contentData: data
-        ? data
-        : state.formData.content
-        ? state.formData.content
-        : [],
-    }));
-  },
-  updateMenuOpts: (ctaIndex, menuIdx, key, value) => {
-    set(
-      produce((draft) => {
-        const cta = draft.formData.header.ctaList[ctaIndex];
-        if (!cta || !cta.ctaMenuOpts) {
-          console.error("Invalid CTA index or Menu options not found.");
-          return;
-        }
-
-        // Directly mutate the draft in immer
-        cta.ctaMenuOpts[menuIdx][key] = value;
-      })
-    );
-  },
 
   setOriginalData: (data) => set({ originalData: data }),
 

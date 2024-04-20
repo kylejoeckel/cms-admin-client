@@ -1,18 +1,15 @@
-import { Typography } from "@mui/material";
 import FileUploader from "../FileUploader";
 import React from "react";
-import StyledContainer, { StyledCard } from "../StyledCard";
+import { StyledCard } from "../StyledCard";
+import ContainerTemplate from "../ContainerTemplate";
 
 const UploadContainer: React.FC = () => {
   return (
-    <StyledContainer>
-      <Typography variant="h6" sx={{ marginBottom: "16px" }}>
-        Asset Upload
-      </Typography>
+    <ContainerTemplate title="Asset Upload">
       <StyledCard>
         <FileUploader />
       </StyledCard>
-    </StyledContainer>
+    </ContainerTemplate>
   );
 };
 
