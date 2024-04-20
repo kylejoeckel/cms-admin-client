@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SnackBar from "../../components/Snackbar";
 import { AuthContextType, User } from "../../template/a/interfaces";
 
@@ -29,8 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [errorOpen, setErrorOpen] = useState(false);
-  const router = useNavigate();
-
+  const location = useLocation();
   const clearError = useCallback(() => {
     setErrorMessage("");
     setErrorOpen(false);
@@ -42,6 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     clearError();
   }, [clearError]);
 
+  const router = useNavigate();
   const checkAuth = useCallback(async () => {
     const token = localStorage.getItem("auth-token");
     if (token) {
@@ -64,14 +64,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           email: userData.email,
           userId: userData.userId,
         });
-        router("/");
+        if (location.pathname === "/login")
+          router(location.state?.from?.pathname || "/");
       } catch (error) {
         console.error("Token validation failed:", error);
         setErrorMessage("Session has expired. Please log in again.");
         logout();
       }
     }
-  }, [logout, router]);
+  }, [location.pathname, location.state?.from?.pathname, logout, router]);
 
   useEffect(() => {
     checkAuth();

@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { isEqual } from "lodash";
 import { fetchSiteData, updateSiteData } from "../../api";
+import { jwtDecode } from "jwt-decode";
 
-export const useSiteData = (organizationId: string) => {
+export const useSiteData = () => {
+  const token = localStorage.getItem("auth-token");
+  const decoded = jwtDecode(token || "");
+  const organizationId =
+    (decoded as { organization_id?: string }).organization_id || "";
   const { data, isError, error, isLoading } = useQuery(
     ["siteData", organizationId],
     () => fetchSiteData(organizationId)

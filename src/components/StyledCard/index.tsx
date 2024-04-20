@@ -6,8 +6,6 @@ export const StyledContainer = styled(Card)({
   padding: "1rem",
   margin: "0.5rem",
   borderRadius: "0.5rem",
-  minWidth: "20rem",
-  // boxShadow: "none",
 });
 
 export const StyledCard = styled(Card)({

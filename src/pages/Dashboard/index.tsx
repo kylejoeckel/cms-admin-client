@@ -1,5 +1,4 @@
 import BasicInfoContainer from "../../components/BasicInfoContainer";
-import { jwtDecode } from "jwt-decode";
 import { useMobile } from "../../hooks/useMobile";
 import { useSiteData } from "../../hooks/useSiteData";
 import DashboardHeader from "../../components/DashboardHeader";
@@ -11,10 +10,6 @@ import HeaderContainer from "../../components/HeaderContainer";
 import MetadataContainer from "../../components/MetadataContainer";
 
 const Dashboard = () => {
-  const token = localStorage.getItem("auth-token");
-  const decoded = jwtDecode(token || "");
-  const organizationId =
-    (decoded as { organization_id?: string }).organization_id || "";
   const {
     handleSave,
     isError,
@@ -26,7 +21,7 @@ const Dashboard = () => {
     snackbarOpen,
     snackbarMessage,
     handleCloseSnackbar,
-  } = useSiteData(organizationId);
+  } = useSiteData();
 
   const mobile = useMobile();
 
@@ -61,8 +56,8 @@ const Dashboard = () => {
           <HeaderContainer />
         </div>
         <div>
-          <MetadataContainer />
           <ContentContainer />
+          <MetadataContainer />
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Grid, TextField, Button } from "@mui/material";
+import { Grid, TextField, Button, useTheme } from "@mui/material";
 import { SketchPicker } from "react-color";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -50,6 +50,7 @@ const MetadataContainer: React.FC = () => {
       });
     };
 
+  const theme = useTheme();
   const ColorPickerDialog: React.FC = () => (
     <Dialog open={colorPickerOpen} onClose={handleColorPickerClose}>
       <DialogTitle>Choose Theme Color</DialogTitle>
@@ -105,9 +106,10 @@ const MetadataContainer: React.FC = () => {
               }
               style={{
                 width: "100%",
-                marginTop: "14px",
+                marginTop: "16px",
                 height: "56px",
                 color: "#fff",
+                borderColor: theme.palette.primary.main,
                 backgroundColor: formData?.metaData?.themeColor,
               }}
             >

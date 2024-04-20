@@ -44,7 +44,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
           {data.map((file, index) => (
             <MenuItem key={index} value={file}>
               {file}
-            </MenuItem> // Update this line
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
