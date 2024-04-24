@@ -14,9 +14,23 @@ export const fetchSiteData = async (organizationId: string) => {
   return response.json();
 };
 
+export const fetchSiteTheme = async (groupName: string) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_SITE_THEME_URL}/themes?groupName=${groupName}`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return response.json();
+};
+
 export const updateSiteData = async (
   organizationId: string,
-  formData: FormData
+  siteData: FormData
 ) => {
   const response = await fetch(
     `${process.env.REACT_APP_SITE_DATA_URL}/${organizationId}`,
@@ -25,7 +39,7 @@ export const updateSiteData = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ siteData: formData }),
+      body: JSON.stringify({ siteData: siteData }),
     }
   );
   if (!response.ok) {

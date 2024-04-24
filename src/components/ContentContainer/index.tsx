@@ -7,15 +7,15 @@ import { useEffect, useState } from "react";
 import ContainerTemplate from "../ContainerTemplate";
 
 const ContentContainer: React.FC = () => {
-  const { formData, setFormData } = useSiteDataStore();
+  const { siteData, setFormData } = useSiteDataStore();
   const [content, setContent] = useState<ContentItem[]>(
-    formData?.content || []
+    siteData?.content || []
   );
   useEffect(() => {
-    if (formData?.content) {
-      setContent(formData.content);
+    if (siteData?.content) {
+      setContent(siteData.content);
     }
-  }, [formData.content]);
+  }, [siteData.content]);
   return (
     <ContainerTemplate
       title="Content Section"
@@ -29,7 +29,7 @@ const ContentContainer: React.FC = () => {
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.stopPropagation();
               setFormData({
-                ...formData,
+                ...siteData,
                 content: content?.slice(0, -1),
               });
             }}
@@ -43,9 +43,9 @@ const ContentContainer: React.FC = () => {
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.stopPropagation();
               setFormData({
-                ...formData,
+                ...siteData,
                 content: [
-                  ...(formData?.content ?? []),
+                  ...(siteData?.content ?? []),
                   {
                     title: "",
                     content: "",

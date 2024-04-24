@@ -2,7 +2,6 @@ import React from "react";
 import IconButton from "@mui/material/IconButton";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { styled } from "@mui/material/styles";
-import useSiteDataStore from "../../store/useSiteDataStore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSiteData } from "../../hooks/useSiteData";
 import { Typography } from "@mui/material";
@@ -34,8 +33,7 @@ const BackButton = styled(IconButton)(({ theme }) => ({
 
 // Component definition with TypeScript annotations
 const SitePreviewPage: React.FC<SitePreviewPageProps> = () => {
-  useSiteData();
-  const { formData } = useSiteDataStore();
+  const { siteData } = useSiteData();
   const route = useNavigate();
   const location = useLocation();
   return (
@@ -70,7 +68,7 @@ const SitePreviewPage: React.FC<SitePreviewPageProps> = () => {
         <div style={{ width: "46px" }} />
       </div>
       <StyledIframe
-        src={"https://" + formData?.domainName}
+        src={"https://" + siteData?.domainName}
         allowFullScreen
         title="Full Screen Iframe"
       ></StyledIframe>

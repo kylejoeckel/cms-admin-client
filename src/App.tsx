@@ -7,6 +7,7 @@ import theme from "./theme";
 import PageTemplate from "./components/PageTemplate";
 import ProtectedRoute from "./components/ProtectedRoute";
 import FullScreenIframe from "./pages/Preview";
+import Theme from "./pages/Theme";
 
 function App() {
   return (
@@ -28,6 +29,16 @@ function App() {
                 <ProtectedRoute>
                   <PageTemplate>
                     <Dashboard />
+                  </PageTemplate>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/theme"
+              element={
+                <ProtectedRoute>
+                  <PageTemplate>
+                    <Theme />
                   </PageTemplate>
                 </ProtectedRoute>
               }

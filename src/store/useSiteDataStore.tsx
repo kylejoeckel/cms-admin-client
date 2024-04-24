@@ -1,12 +1,14 @@
-import create from "zustand";
+import {create} from "zustand";
 import { isEqual } from "lodash";
 import { TEMPLATE_DATA } from "../template/a/";
 import { FormData, ContentItem, CTA } from "../template/a/interfaces";
 
 interface SiteDataStore {
   originalData: FormData;
-  formData: FormData;
+  siteData: FormData;
   hasChanged: boolean;
+  groupName: string;
+  setGroupName: (groupName: string) => void;
   setOriginalData: (data: FormData) => void;
   setFormData: (
     data: FormData | ((prevFormData: FormData) => FormData)
@@ -23,20 +25,22 @@ interface SiteDataStore {
 
 const useSiteDataStore = create<SiteDataStore>((set, get) => ({
   originalData: TEMPLATE_DATA,
-  formData: TEMPLATE_DATA,
+  siteData: TEMPLATE_DATA,
   hasChanged: false,
+  groupName: '',
+  setGroupName: (groupName: string)=>set({groupName}),
 
   setOriginalData: (data) => set({ originalData: data }),
 
   setFormData: (data) => {
-    const newData = typeof data === "function" ? data(get().formData) : data;
+    const newData = typeof data === "function" ? data(get().siteData) : data;
     set({
-      formData: newData,
+      siteData: newData,
       hasChanged: !isEqual(get().originalData, newData),
     });
   },
 
-  resetData: () => set({ formData: get().originalData }),
+  resetData: () => set({ siteData: get().originalData }),
 
   updateContentItem: (index, parameterName, value, ctaIndex) => {
     set((state) => {
@@ -44,22 +48,22 @@ const useSiteDataStore = create<SiteDataStore>((set, get) => ({
         typeof index === "string" &&
         index === "header" &&
         typeof ctaIndex === "number" &&
-        state.formData.header?.ctaList
+        state.siteData.header?.ctaList
       ) {
-        const updatedCtas = state.formData.header.ctaList.map((cta, idx) =>
+        const updatedCtas = state.siteData.header.ctaList.map((cta, idx) =>
           idx === ctaIndex ? { ...cta, [parameterName]: value } : cta
         );
         return {
-          formData: {
-            ...state.formData,
+          siteData: {
+            ...state.siteData,
             header: {
-              ...state.formData.header,
+              ...state.siteData.header,
               ctaList: updatedCtas,
             },
           },
         };
-      } else if (typeof index === "number" && state.formData.content) {
-        const updatedContent = state.formData.content.map((item, idx) => {
+      } else if (typeof index === "number" && state.siteData.content) {
+        const updatedContent = state.siteData.content.map((item, idx) => {
           if (idx !== index) return item;
           if (
             "ctaList" in item &&
@@ -73,7 +77,7 @@ const useSiteDataStore = create<SiteDataStore>((set, get) => ({
           }
           return { ...item, [parameterName]: value };
         });
-        return { formData: { ...state.formData, content: updatedContent } };
+        return { siteData: { ...state.siteData, content: updatedContent } };
       }
       return {}; // If neither condition is met, return unchanged state
     });
@@ -81,7 +85,7 @@ const useSiteDataStore = create<SiteDataStore>((set, get) => ({
 
   setMenuRoute: (file, index) =>
     set((state) => ({
-      formData: { ...state.formData, menuRoute: `${file}-${index}` }, // Assuming menuRoute is a string, concatenate file and index
+      siteData: { ...state.siteData, menuRoute: `${file}-${index}` }, // Assuming menuRoute is a string, concatenate file and index
     })),
 }));
 

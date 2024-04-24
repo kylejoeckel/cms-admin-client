@@ -18,11 +18,11 @@ import ContainerTemplate from "../ContainerTemplate";
 
 // TODO: abstractions needed to clean things up here
 const HeaderContainer: React.FC = () => {
-  const { setFormData, formData } = useSiteDataStore();
+  const { setFormData, siteData } = useSiteDataStore();
 
   const setHeaderData = (data: HeaderData) => {
     setFormData({
-      ...formData,
+      ...siteData,
       header: data,
     });
   };
@@ -31,27 +31,27 @@ const HeaderContainer: React.FC = () => {
     <ContainerTemplate title="Header Content">
       <StyledCard>
         <Grid container>
-          {formData?.header?.logoUrl && (
+          {siteData?.header?.logoUrl && (
             <ImageSelector
               label="Header Logo"
-              currentImage={formData?.header.logoUrl}
+              currentImage={siteData?.header.logoUrl}
               setImage={(image) =>
-                setHeaderData({ ...formData?.header, logoUrl: image })
+                setHeaderData({ ...siteData?.header, logoUrl: image })
               }
             />
           )}
           <hr style={{ marginTop: "12px", width: "100%" }} />
-          {formData?.header?.ctaList && (
+          {siteData?.header?.ctaList && (
             <>
-              {formData?.header.ctaList.map((cta, idx) => (
+              {siteData?.header.ctaList.map((cta, idx) => (
                 <div key={idx}>
                   <TextField
                     label="CTA"
                     value={cta.cta}
                     onChange={(e) => {
                       setHeaderData({
-                        ...formData?.header,
-                        ctaList: formData?.header?.ctaList?.map((cta, ctaIdx) =>
+                        ...siteData?.header,
+                        ctaList: siteData?.header?.ctaList?.map((cta, ctaIdx) =>
                           ctaIdx === idx ? { ...cta, cta: e.target.value } : cta
                         ),
                       });
@@ -72,8 +72,8 @@ const HeaderContainer: React.FC = () => {
                                 checked={Boolean(cta.ctaDownload)}
                                 onChange={(event) => {
                                   setHeaderData({
-                                    ...formData?.header,
-                                    ctaList: formData?.header?.ctaList?.map(
+                                    ...siteData?.header,
+                                    ctaList: siteData?.header?.ctaList?.map(
                                       (cta, ctaIdx) =>
                                         ctaIdx === idx
                                           ? {
@@ -95,8 +95,8 @@ const HeaderContainer: React.FC = () => {
                         <PdfSelector
                           setFile={(file) =>
                             setHeaderData({
-                              ...formData?.header,
-                              ctaList: formData?.header?.ctaList?.map(
+                              ...siteData?.header,
+                              ctaList: siteData?.header?.ctaList?.map(
                                 (cta, ctaIdx) =>
                                   ctaIdx === idx
                                     ? { ...cta, ctaLink: file }
@@ -112,8 +112,8 @@ const HeaderContainer: React.FC = () => {
                           label="Enter Link (https://example.com) or (tel:123-456-7890)"
                           onChange={(event) =>
                             setHeaderData({
-                              ...formData?.header,
-                              ctaList: formData?.header?.ctaList?.map(
+                              ...siteData?.header,
+                              ctaList: siteData?.header?.ctaList?.map(
                                 (cta, ctaIdx) =>
                                   ctaIdx === idx
                                     ? { ...cta, ctaLink: event.target.value }

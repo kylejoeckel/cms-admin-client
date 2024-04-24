@@ -18,14 +18,14 @@ const CTAList: React.FC<{
   index: number | string;
 }> = ({ index }) => {
   const [ctaList, setCtaList] = React.useState<CTA[]>([]);
-  const { updateContentItem: updateData, formData } = useSiteDataStore();
+  const { updateContentItem: updateData, siteData } = useSiteDataStore();
   useEffect(() => {
     if (index === "header") {
-      setCtaList(formData.header?.ctaList || []);
-    } else if (typeof index === "number" && formData.content) {
-      setCtaList(formData?.content[index]?.ctaList || []);
+      setCtaList(siteData.header?.ctaList || []);
+    } else if (typeof index === "number" && siteData.content) {
+      setCtaList(siteData?.content[index]?.ctaList || []);
     }
-  }, [formData, index]);
+  }, [siteData, index]);
 
   return (
     <>

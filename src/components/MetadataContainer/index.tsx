@@ -35,8 +35,28 @@ export const ColorPickerDialog: React.FC<ColorPickerDialogProps> = ({
   </Dialog>
 );
 
+interface MetadataTextFieldProps {
+  label: string;
+  value?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+}
+
+const MetadataTextField: React.FC<MetadataTextFieldProps> = ({
+  label,
+  value,
+  onChange,
+}) => (
+  <TextField
+    label={label}
+    value={value}
+    onChange={onChange}
+    fullWidth
+    margin="normal"
+  />
+);
+
 const MetadataContainer: React.FC = () => {
-  const { setFormData, formData } = useSiteDataStore();
+  const { setFormData, siteData } = useSiteDataStore();
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState("");
 
@@ -53,22 +73,22 @@ const MetadataContainer: React.FC = () => {
     (color: { hex: string }) => {
       setCurrentColor(color.hex);
       setFormData({
-        ...formData,
+        ...siteData,
         metaData: {
-          ...formData.metaData,
+          ...siteData.metaData,
           themeColor: color.hex,
         },
       });
     },
-    [formData, setFormData]
+    [siteData, setFormData]
   );
 
   const handleChange =
     (field: keyof MetaData) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setFormData({
-        ...formData,
+        ...siteData,
         metaData: {
-          ...formData.metaData,
+          ...siteData.metaData,
           [field]: event.target.value,
         },
       });
@@ -86,38 +106,38 @@ const MetadataContainer: React.FC = () => {
       />
       <StyledCard>
         <Grid container spacing={1}>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Site Title"
-              value={formData?.metaData?.title}
-              onChange={handleChange("title")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Description"
-              value={formData?.metaData?.description}
-              onChange={handleChange("description")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Keywords"
-              value={formData?.metaData?.keywords}
-              onChange={handleChange("keywords")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
+          {Object.entries({
+            title: "Site Title",
+            description: "Description",
+            keywords: "Keywords (seperate values with ',')",
+            appleMobileWebAppTitle: "Apple Mobile Web App Title",
+            appleMobileWebStatusBarStyle: "Apple Mobile Web Status Bar Style",
+            ogDescription: "Social Share Description",
+            ogTitle: "Social Share Title",
+            ogUrl: "Social Share URL",
+            ogSiteName: "Social Share Site Name",
+          }).map(([field, label]: [string, string]) =>
+            siteData.metaData && siteData.metaData[field as keyof MetaData] ? (
+              <Grid item xs={12} sm={6} key={field}>
+                <MetadataTextField
+                  label={label}
+                  value={
+                    siteData?.metaData
+                      ? siteData?.metaData[field as keyof MetaData]
+                      : ""
+                  }
+                  onChange={handleChange(field as keyof MetaData)}
+                />
+              </Grid>
+            ) : (
+              <></>
+            )
+          )}
           <Grid item xs={12} md={6}>
             <Button
               variant="outlined"
               onClick={() =>
-                handleColorPickerOpen(formData?.metaData?.themeColor || "")
+                handleColorPickerOpen(siteData?.metaData?.themeColor || "")
               }
               style={{
                 width: "100%",
@@ -125,7 +145,7 @@ const MetadataContainer: React.FC = () => {
                 height: "56px",
                 color: "#fff",
                 borderColor: theme.palette.primary.main,
-                backgroundColor: formData?.metaData?.themeColor,
+                backgroundColor: siteData?.metaData?.themeColor,
               }}
             >
               Pick Theme Color
@@ -133,7 +153,7 @@ const MetadataContainer: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <ImageSelector
-              currentImage={formData?.metaData?.favicon || ""}
+              currentImage={siteData?.metaData?.favicon || ""}
               label="Favicon (Tab Icon)"
               setImage={(image) =>
                 handleChange("favicon")({
@@ -144,7 +164,7 @@ const MetadataContainer: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <ImageSelector
-              currentImage={formData.metaData?.appleTouchIcon || ""}
+              currentImage={siteData.metaData?.appleTouchIcon || ""}
               label="Apple Touch Icon"
               setImage={(image) =>
                 handleChange("appleTouchIcon")({
@@ -154,68 +174,14 @@ const MetadataContainer: React.FC = () => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
-              label="Apple Mobile Web App Title"
-              value={formData?.metaData?.appleMobileWebAppTitle}
-              onChange={handleChange("appleMobileWebAppTitle")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Apple Mobile Web Status Bar Style"
-              value={formData?.metaData?.appleMobileWebStatusBarStyle}
-              onChange={handleChange("appleMobileWebStatusBarStyle")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
             <ImageSelector
-              currentImage={formData.metaData?.ogImage || ""}
+              currentImage={siteData.metaData?.ogImage || ""}
               label="Social Share Image"
               setImage={(image) =>
                 handleChange("ogImage")({
                   target: { value: image },
                 } as React.ChangeEvent<HTMLInputElement>)
               }
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="OG Description"
-              value={formData?.metaData?.ogDescription}
-              onChange={handleChange("ogDescription")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="OG Title"
-              value={formData?.metaData?.ogTitle}
-              onChange={handleChange("ogTitle")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="OG URL"
-              value={formData?.metaData?.ogUrl}
-              onChange={handleChange("ogUrl")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="OG Site Name"
-              value={formData?.metaData?.ogSiteName}
-              onChange={handleChange("ogSiteName")}
-              fullWidth
-              margin="normal"
             />
           </Grid>
         </Grid>

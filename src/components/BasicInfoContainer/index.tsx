@@ -6,11 +6,11 @@ import { StyledCard } from "../StyledCard";
 import ContainerTemplate from "../ContainerTemplate";
 
 const BasicInfoContainer: React.FC = () => {
-  const { setFormData, formData } = useSiteDataStore();
+  const { setFormData, siteData } = useSiteDataStore();
   // Event handler for text field changes
   const handleChange =
     (field: keyof FormData) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData({ ...formData, [field]: event.target.value });
+      setFormData({ ...siteData, [field]: event.target.value });
     };
 
   return (
@@ -19,7 +19,7 @@ const BasicInfoContainer: React.FC = () => {
         <Grid container>
           <TextField
             label="Full Name"
-            value={formData?.fullName}
+            value={siteData?.fullName}
             onChange={handleChange("fullName")}
             fullWidth
             margin="normal"
@@ -27,7 +27,7 @@ const BasicInfoContainer: React.FC = () => {
 
           <TextField
             label="Address"
-            value={formData?.address}
+            value={siteData?.address}
             onChange={handleChange("address")}
             fullWidth
             margin="normal"
@@ -35,7 +35,7 @@ const BasicInfoContainer: React.FC = () => {
 
           <TextField
             label="Phone Number"
-            value={formData?.phone}
+            value={siteData?.phone}
             onChange={handleChange("phone")}
             fullWidth
             margin="normal"
@@ -43,7 +43,7 @@ const BasicInfoContainer: React.FC = () => {
 
           <TextField
             label="Hours"
-            value={formData?.hours}
+            value={siteData?.hours}
             onChange={handleChange("hours")}
             fullWidth
             disabled
@@ -52,7 +52,7 @@ const BasicInfoContainer: React.FC = () => {
 
           <TextField
             label="Domain Name"
-            value={formData?.domainName}
+            value={siteData?.domainName}
             onChange={handleChange("domainName")}
             fullWidth
             disabled

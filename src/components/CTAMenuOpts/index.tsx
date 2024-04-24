@@ -10,7 +10,7 @@ interface CTAMenuOptsProps {
 }
 
 const CTAMenuOpts = ({ menuOpts, index }: CTAMenuOptsProps) => {
-  const { formData, setFormData } = useSiteDataStore();
+  const { siteData, setFormData } = useSiteDataStore();
 
   return (
     <>
@@ -29,10 +29,10 @@ const CTAMenuOpts = ({ menuOpts, index }: CTAMenuOptsProps) => {
             value={menu.title}
             onChange={(e) => {
               setFormData({
-                ...formData,
+                ...siteData,
                 header: {
-                  ...formData?.header,
-                  ctaList: formData?.header?.ctaList?.map((cta, ctaIdx) =>
+                  ...siteData?.header,
+                  ctaList: siteData?.header?.ctaList?.map((cta, ctaIdx) =>
                     ctaIdx === index
                       ? {
                           ...cta,
@@ -55,10 +55,10 @@ const CTAMenuOpts = ({ menuOpts, index }: CTAMenuOptsProps) => {
             <PdfSelector
               setFile={(file) =>
                 setFormData({
-                  ...formData,
+                  ...siteData,
                   header: {
-                    ...formData?.header,
-                    ctaList: formData?.header?.ctaList?.map((cta, ctaIdx) =>
+                    ...siteData?.header,
+                    ctaList: siteData?.header?.ctaList?.map((cta, ctaIdx) =>
                       ctaIdx === index
                         ? {
                             ...cta,
@@ -84,10 +84,10 @@ const CTAMenuOpts = ({ menuOpts, index }: CTAMenuOptsProps) => {
               label="Enter Link (https://example.com) or (tel:123-456-7890)"
               onChange={(event) =>
                 setFormData({
-                  ...formData,
+                  ...siteData,
                   header: {
-                    ...formData?.header,
-                    ctaList: formData?.header?.ctaList?.map((cta, ctaIdx) =>
+                    ...siteData?.header,
+                    ctaList: siteData?.header?.ctaList?.map((cta, ctaIdx) =>
                       ctaIdx === index
                         ? {
                             ...cta,
